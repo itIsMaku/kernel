@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential nasm xorriso grub-pc-bin grub-common gcc-multilib gdb-multiarch qemu-system-x86
+          sudo apt install -y gcc-i686-linux-gnu
+
+      - name: Build kernel and ISO
+        run: make
+
+      - name: Upload ISO
+        uses: actions/upload-artifact@v3
+        with:
+          name: volkmanos-iso
+          path: iso/volkmanos.iso
