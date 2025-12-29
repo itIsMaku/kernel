@@ -1,0 +1,15 @@
+*.o
+*.bin
+*.elf
+*.iso
+*.d
+*.log
+*.tmp
+*.swp
+*~
+*.out
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
