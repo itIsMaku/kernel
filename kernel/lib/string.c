@@ -2,16 +2,14 @@
 
 size_t strlen(const char* str) {
     size_t len = 0;
-    while (str[len])
-    {
+    while (str[len]) {
         len++;
     }
     return len;
 }
 
 int strcmp(const char* a, const char* b) {
-    while (*a && (*a == *b))
-    {
+    while (*a && (*a == *b)) {
         a++;
         b++;
     }
@@ -19,8 +17,7 @@ int strcmp(const char* a, const char* b) {
 }
 
 int strncmp(const char* a, const char* b, size_t n) {
-    while (n && *a && (*a == *b))
-    {
+    while (n && *a && (*a == *b)) {
         a++;
         b++;
         n--;

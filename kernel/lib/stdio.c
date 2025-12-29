@@ -6,21 +6,18 @@ static void itoa(int value, char* buffer) {
     int i = 0;
     int neg = 0;
 
-    if (value == 0)
-    {
+    if (value == 0) {
         buffer[0] = '0';
         buffer[1] = 0;
         return;
     }
 
-    if (value < 0)
-    {
+    if (value < 0) {
         neg = 1;
         value = -value;
     }
 
-    while (value > 0)
-    {
+    while (value > 0) {
         tmp[i++] = '0' + (value % 10);
         value /= 10;
     }
@@ -29,8 +26,7 @@ static void itoa(int value, char* buffer) {
     if (neg)
         buffer[j++] = '-';
 
-    while (i--)
-    {
+    while (i--) {
         buffer[j++] = tmp[i];
     }
 
@@ -51,8 +47,7 @@ void print_hex(unsigned int value) {
     char hex[11] = "0x00000000";
     const char* digits = "0123456789ABCDEF";
 
-    for (int i = 9; i >= 2; i--)
-    {
+    for (int i = 9; i >= 2; i--) {
         hex[i] = digits[value & 0xF];
         value >>= 4;
     }

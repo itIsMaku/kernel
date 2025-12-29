@@ -17,17 +17,14 @@ static void scroll(void) {
     if (row < VGA_HEIGHT)
         return;
 
-    for (size_t y = 1; y < VGA_HEIGHT; y++)
-    {
-        for (size_t x = 0; x < VGA_WIDTH; x++)
-        {
+    for (size_t y = 1; y < VGA_HEIGHT; y++) {
+        for (size_t x = 0; x < VGA_WIDTH; x++) {
             VGA_MEMORY[(y - 1) * VGA_WIDTH + x] =
                 VGA_MEMORY[y * VGA_WIDTH + x];
         }
     }
 
-    for (size_t x = 0; x < VGA_WIDTH; x++)
-    {
+    for (size_t x = 0; x < VGA_WIDTH; x++) {
         VGA_MEMORY[(VGA_HEIGHT - 1) * VGA_WIDTH + x] =
             vga_entry(' ', color);
     }
@@ -36,10 +33,8 @@ static void scroll(void) {
 }
 
 void vga_clear(void) {
-    for (size_t y = 0; y < VGA_HEIGHT; y++)
-    {
-        for (size_t x = 0; x < VGA_WIDTH; x++)
-        {
+    for (size_t y = 0; y < VGA_HEIGHT; y++) {
+        for (size_t x = 0; x < VGA_WIDTH; x++) {
             VGA_MEMORY[y * VGA_WIDTH + x] =
                 vga_entry(' ', color);
         }
@@ -49,17 +44,13 @@ void vga_clear(void) {
 }
 
 void vga_putc(char c) {
-    if (c == '\n')
-    {
+    if (c == '\n') {
         col = 0;
         row++;
         scroll();
         return;
-    }
-    else if (c == '\b')
-    {
-        if (col > 0)
-        {
+    } else if (c == '\b') {
+        if (col > 0) {
             col--;
             VGA_MEMORY[row * VGA_WIDTH + col] = vga_entry(' ', color);
         }
@@ -68,8 +59,7 @@ void vga_putc(char c) {
 
     VGA_MEMORY[row * VGA_WIDTH + col] = vga_entry(c, color);
     col++;
-    if (col >= VGA_WIDTH)
-    {
+    if (col >= VGA_WIDTH) {
         col = 0;
         row++;
         scroll();
@@ -77,8 +67,7 @@ void vga_putc(char c) {
 }
 
 void vga_print(const char* str) {
-    for (size_t i = 0; str[i]; i++)
-    {
+    for (size_t i = 0; str[i]; i++) {
         vga_putc(str[i]);
     }
 }
