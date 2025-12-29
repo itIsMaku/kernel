@@ -1,7 +1,6 @@
-CC=i686-linux-gnu-gcc
 AS=nasm
-
-CFLAGS=-ffreestanding -O2 -Wall -Wextra -nostdlib -fno-builtin
+CC = gcc-13
+CFLAGS = -ffreestanding -O2 -Wall -Wextra -nostdlib -m32 -fno-builtin
 
 OBJS= \
 	kernel/boot.o \
