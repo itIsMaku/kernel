@@ -16,7 +16,8 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y build-essential nasm xorriso grub-pc-bin grub-common gcc-multilib gdb-multiarch qemu-system-x86 gcc-i686-linux-gnu mtools
+          sudo apt install -y build-essential nasm xorriso grub-pc-bin grub-common gcc-multilib gdb-multiarch qemu-system-x86 mtools
+          sudo apt install -y gcc-13-i686-linux-gnu g++-13-i686-linux-gnu
 
       - name: Build kernel and ISO
         run: make
