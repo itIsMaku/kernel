@@ -28,9 +28,21 @@ int strncmp(const char* a, const char* b, size_t n) {
     return *(unsigned char*)a - *(unsigned char*)b;
 }
 
-char* strcpy(char* dest, const char* src) {
-    char* ret = dest;
-    while ((*dest++ = *src++))
-        ;
-    return ret;
+char* strchr(const char* s, int c) {
+    while (*s) {
+        if (*s == (char)c) return (char*)s;
+
+        s++;
+    }
+    return 0;
+}
+
+void strncpy(char* dest, const char* src, size_t n) {
+    for (size_t i = 0; i < n; i++) {
+        if (src[i] == 0) {
+            dest[i] = 0;
+            return;
+        }
+        dest[i] = src[i];
+    }
 }

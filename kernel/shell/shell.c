@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "commands.h"
 #include "../drivers/vga.h"
 #include "../drivers/keyboard.h"
 #include "../lib/string.h"
@@ -10,22 +11,33 @@
 #define SHELL_PROMPT "VolkmanOS> "
 
 static void execute_command(char* input) {
-    if (strcmp(input, "help") == 0) {
-        print("\nCommands: help, clear, echo <text>, shutdown, info\n");
-    } else if (strcmp(input, "clear") == 0) {
-        vga_clear();
-    } else if (strncmp(input, "echo ", 5) == 0) {
-        print(input + 5);
-        print("\n");
-    } else if (strcmp(input, "shutdown") == 0) {
-        shutdown_system();
-    } else if (strcmp(input, "info") == 0) {
-        print_info();
-    } else if (strlen(input) > 0) {
-        print_colored("\nUnknown command: ", 12);
-        print_colored(input, 12);
-        print("\n");
+    if (strlen(input) == 0) return;
+
+    char* space = strchr(input, ' ');
+    char command_name[CMD_NAME_MAX];
+
+    if (space) {
+        size_t len = space - input;
+        if (len >= CMD_NAME_MAX) len = CMD_NAME_MAX - 1;
+        strncpy(command_name, input, len);
+        command_name[len] = 0;
+    } else {
+        strncpy(command_name, input, CMD_NAME_MAX - 1);
+        command_name[CMD_NAME_MAX - 1] = 0;
     }
+
+    const char* args = space ? (space + 1) : "";
+
+    for (size_t i = 0; i < COMMAND_COUNT; i++) {
+        if (strcmp(command_name, commands[i].name) == 0) {
+            commands[i].func(args);
+            return;
+        }
+    }
+
+    print_colored("\nUnknown command: ", 12);
+    print_colored(input, 12);
+    print("\n");
 }
 
 void shell_run(void) {

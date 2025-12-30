@@ -11,7 +11,8 @@ OBJS= \
 	kernel/drivers/vga.o \
 	kernel/drivers/keyboard.o \
 	kernel/shell/shell.o \
-	kernel/shell/shutdown.o
+	kernel/shell/shutdown.o \
+	kernel/shell/commands.o 
 
 all: iso/volkmanos.iso
 
@@ -41,6 +42,9 @@ kernel/shell/shell.o:
 
 kernel/shell/shutdown.o:
 	$(CC) $(CFLAGS) -c kernel/shell/shutdown.c -o kernel/shell/shutdown.o
+
+kernel/shell/commands.o:
+	$(CC) $(CFLAGS) -c kernel/shell/commands.c -o kernel/shell/commands.o
 
 iso/boot/kernel.bin: $(OBJS)
 	$(CC) $(CFLAGS) -T kernel/linker.ld $(OBJS) -o iso/boot/kernel.bin
