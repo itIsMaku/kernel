@@ -20,17 +20,14 @@ static const char scancode_ascii[128] = {
 char get_char(void) {
     unsigned char scancode;
 
-    while (1)
-    {
-        if (inb(STATUS_PORT) & OUTPUT_BUFFER_FULL)
-        {
+    while (1) {
+        if (inb(STATUS_PORT) & OUTPUT_BUFFER_FULL) {
             scancode = inb(DATA_PORT);
 
-            if (!(scancode & 0x80) && scancode < 128 && scancode_ascii[scancode] != 0)
-            {
+            if (!(scancode & 0x80) && scancode < 128 && scancode_ascii[scancode] != 0) {
                 return scancode_ascii[scancode];
             }
         }
     }
 }
-  
+   
