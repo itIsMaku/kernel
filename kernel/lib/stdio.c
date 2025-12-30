@@ -34,13 +34,17 @@ static void itoa(int value, char* buffer) {
 }
 
 void print(const char* str) {
-    vga_print(str);
+    vga_print(str, 15);
+}
+
+void print_colored(const char* str, unsigned char color) {
+    vga_print(str, color);
 }
 
 void print_int(int value) {
     char buf[16];
     itoa(value, buf);
-    vga_print(buf);
+    vga_print(buf, 15);
 }
 
 void print_hex(unsigned int value) {
@@ -52,13 +56,13 @@ void print_hex(unsigned int value) {
         value >>= 4;
     }
 
-    vga_print(hex);
+    vga_print(hex, 15);
 }
 
 void panic(const char* msg) {
     vga_clear();
-    vga_print("KERNEL PANIC:\n");
-    vga_print(msg);
+    vga_print("KERNEL PANIC:\n", 15);
+    vga_print(msg, 15);
     while (1)
         __asm__("cli; hlt");
 }

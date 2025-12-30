@@ -5,6 +5,6 @@
 
 void kmain(void) {
     vga_clear();
-    print("Welcome to VolkmanOS - kernel basics learning shit\n");
+    print_info();
     shell_run();
 }
