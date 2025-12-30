@@ -8,6 +8,7 @@ OBJS= \
 	kernel/lib/string.o \
 	kernel/lib/memory.o \
 	kernel/lib/stdio.o \
+	kernel/lib/string_dyn.o \
 	kernel/drivers/vga.o \
 	kernel/drivers/keyboard.o \
 	kernel/shell/shell.o \
@@ -24,6 +25,9 @@ kernel/kernel.o:
 
 kernel/lib/string.o:
 	$(CC) $(CFLAGS) -c kernel/lib/string.c -o kernel/lib/string.o
+
+kernel/lib/string_dyn.o:
+	$(CC) $(CFLAGS) -c kernel/lib/string_dyn.c -o kernel/lib/string_dyn.o
 
 kernel/lib/memory.o:
 	$(CC) $(CFLAGS) -c kernel/lib/memory.c -o kernel/lib/memory.o

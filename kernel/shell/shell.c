@@ -6,6 +6,7 @@
 #include "../lib/stdio.h"
 #include "../lib/memory.h"
 #include "shutdown.h"
+#include "../lib/string_dyn.h"
 
 #define SHELL_MAX_INPUT 128
 #define SHELL_PROMPT "VolkmanOS> "
@@ -41,12 +42,8 @@ static void execute_command(char* input) {
 }
 
 void shell_run(void) {
-    char input[SHELL_MAX_INPUT];
-    size_t pos = 0;
-
     while (1) {
-        pos = 0;
-        memset(input, 0, SHELL_MAX_INPUT);
+        String input = string_new(32);
 
         print_colored(SHELL_PROMPT, 7);
 
@@ -55,22 +52,25 @@ void shell_run(void) {
 
             if (c == '\n') { // enter
                 vga_putc('\n', 15);
-                input[pos] = 0;
-                execute_command(input);
+                string_append_char(&input, 0);
+                execute_command(input.data);
                 break;
             } else if (c == '\b') { // backspace
-                if (pos > 0) {
-                    pos--;
-
+                if (input.len > 0) {
+                    input.len--;
                     vga_putc('\b', 15);
                 }
             } else {
-                if (pos < SHELL_MAX_INPUT - 1) {
-                    input[pos++] = c;
-                    vga_putc(c, 15);
-                }
+                string_append_char(&input, c);
+                vga_putc(c, 15);
+                // if (pos < SHELL_MAX_INPUT - 1) {
+                //     input[pos++] = c;
+                //     vga_putc(c, 15);
+                // }
             }
         }
+
+        string_free(&input);
     }
 }
 
@@ -88,6 +88,7 @@ void print_info(void) {
     print(" - VGA text output with colored printing\n");
     print(" - basic keyboard input handling with polling\n");
     print(" - simple shell with a few commands\n\n");
+    print(" - heap memory allocator (malloc/free)\n");
 
     print_colored("\nTip: Type 'help' to see all available commands.\n", 10);
 
